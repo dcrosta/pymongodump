@@ -16,8 +16,6 @@ setup(
     author_email='dcrosta@late.am',
     url='',
     keywords='mongodb dump restore pymongo',
-    packages=find_packages(),
-    include_package_data=True,
-    install_requires=['pymongo'],
+    py_modules=['pymongodump'],
 )
 
