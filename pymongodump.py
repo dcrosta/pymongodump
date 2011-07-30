@@ -32,7 +32,7 @@ import sys
 from pymongo.database import Database
 
 
-def dump(database, filename):
+def dump(database, filename, collections=None):
     # dump the entire contents of the database to the
     # file named by `filename`. This method makes no
     # attempt to ensure that the data size will fit in
@@ -49,6 +49,8 @@ def dump(database, filename):
 
     for name in database.collection_names():
         if name.startswith('system.'):
+            continue
+        if collections is not None and name not in collections:
             continue
 
         collection = database[name]
