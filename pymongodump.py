@@ -78,7 +78,8 @@ def restore(database, filename, drop=True):
         documents = record['collections'][name]
         collection = database[name]
         for batch in _chunk_iterator(documents):
-            collection.insert(batch, safe=True)
+            if batch:
+                collection.insert(batch, safe=True)
 
         for index in record['indexes'][name].itervalues():
             if index['key'] == [('_id', 1)]:
