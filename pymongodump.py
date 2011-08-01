@@ -71,12 +71,12 @@ def restore(database, filename, drop=True):
 
     record = cPickle.load(file(filename, 'r+b'))
 
-    if drop:
-        database.connection.drop_database(database.name)
-
     for name in record['collections']:
-        documents = record['collections'][name]
+        if drop and name in database.collection_names():
+            database.drop_collection(name)
+
         collection = database[name]
+        documents = record['collections'][name]
         for batch in _chunk_iterator(documents):
             if batch:
                 collection.insert(batch, safe=True)
